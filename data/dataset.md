@@ -1,0 +1,118 @@
+#### Veri setindeki sütunlar aşağıdaki anlamlara gelir:
+
+- eventid: Terör olayının benzersiz kimlik numarası.
+- iyear: Olayın gerçekleştiği yıl.
+- imonth: Olayın gerçekleştiği ay.
+- iday: Olayın gerçekleştiği gün.
+- approxdate: Olayın yaklaşık tarihi (null ise kesin tarih verilmiştir).
+- extended: Olayın süresi uzatılmış mı (1: Evet, 0: Hayır).
+- resolution: Olayın sonucunun nasıl çözüldüğü (null ise çözülmemiştir).
+- country: Olayın gerçekleştiği ülkenin adı.
+- region: Olayın gerçekleştiği bölgenin adı.
+- provstate: Olayın gerçekleştiği eyalet veya ilin adı (varsa).
+- city: Olayın gerçekleştiği şehir veya kasabanın adı.
+- latitude: Olayın gerçekleştiği yerin enlem koordinatı.
+- longitude: Olayın gerçekleştiği yerin boylam koordinatı.
+- specificity: Olayın yer spesifikliği (1-5 arası bir değer, 1 en spesifik).
+- vicinity: Olayın gerçekleştiği yerin yakın çevresinde mi (1: Evet, 0: Hayır).
+- location: Olayın tam konumu veya adresi.
+- summary: Olaya dair özet bilgiler.
+- crit1, crit2, crit3: Olayın terörizm tanımına uygunluğunu gösteren kriterler (1: Uyuyor, 0: Uymuyor).
+- doubtterr: Terör olayıyla ilgili şüphelerin olup olmadığı (1: Şüpheli, 0: Şüphesiz).
+- alternative: Alternatif bir terör olayı teorisi var mı (1: Evet, 0: Hayır).
+- alternative_txt: Alternatif terör olayı teorisinin açıklaması (varsa).
+- multiple: Olayda birden fazla terörist eylem var mı (1: Evet, 0: Hayır).
+- success: Terör eylemi başarılı mı (1: Evet, 0: Hayır).
+- suicide: Eylem bir intihar saldırısı mı (1: Evet, 0: Hayır).
+- attacktype1: İlk saldırı tipi.
+- attacktype1_txt: İlk saldırı tipinin açıklaması.
+- attacktype2: İkinci saldırı tipi (varsa).
+- attacktype2_txt: İkinci saldırı tipinin açıklaması (varsa).
+- attacktype3: Üçüncü saldırı tipi (varsa).
+- attacktype3_txt: Üçüncü saldırı tipinin açıklaması (varsa).
+- targtype1: İlk hedef tipi.
+- targtype1_txt: İlk hedef tipinin açıklaması.
+- targsubtype1: İlk hedef alt tipi.
+- targsubtype1_txt: İlk hedef alt tipinin açıklaması.
+- corp1: İlk hedefe ait kurum, şirket veya örgüt adı.
+- target1: İlk hedefin adı.
+- natlty1: İlk hedefin ulusal kimliği.
+- natlty1_txt: İlk hedefin ulusal kimliğinin açıklaması.
+- gname: Terör grubunun adı.
+- gsubname: Terör grubunun alt adı (varsa).
+- gname2: İkinci terör grubunun adı (varsa).
+- gsubname2: İkinci terör grubunun alt adı (varsa).
+- gname3: Üçüncü terör grubunun adı (varsa).
+- gsubname3: Üçüncü terör grubunun alt adı (varsa).
+- motive: Terör eyleminin nedeni.
+- guncertain1: Terör grubunun kimliği hakkında belirsizlik var mı (1: Evet, 0: Hayır).
+- guncertain2: İkinci terör grubunun kimliği hakkında belirsizlik var mı (varsa).
+- guncertain3: Üçüncü terör grubunun kimliği hakkında belirsizlik var mı (varsa).
+- individual: Terör eylemi bireysel bir eylem mi (1: Evet, 0: Hayır).
+- nperps: Olayda yer alan saldırgan sayısı.
+- nperpcap: Olayda ele geçirilen saldırgan sayısı.
+- claimed: Olayı üstlenen bir grup var mı (1: Evet, 0: Hayır).
+- claimmode: Olayı üstlenme yöntemi.
+- claimmode_txt: Olayı üstlenme yönteminin açıklaması.
+- claim2: İkinci bir grup tarafından olayın üstlenilip üstlenilmediği (varsa).
+- claimmode2: İkinci grup tarafından olayı üstlenme yöntemi (varsa).
+- claimmode2_txt: İkinci grup tarafından olayı üstlenme yönteminin açıklaması (varsa).
+- claim3: Üçüncü bir grup tarafından olayın üstlenilip üstlenilmediği (varsa).
+- claimmode3: Üçüncü grup tarafından olayı üstlenme yöntemi (varsa).
+- claimmode3_txt: Üçüncü grup tarafından olayı üstlenme yönteminin açıklaması (varsa).
+- compclaim: Eylemle ilgili çelişkili üstlenmeler var mı (1: Evet, 0: Hayır).
+- weaptype1: İlk kullanılan silah tipi.
+- weaptype1_txt: İlk kullanılan silah tipinin açıklaması.
+- weapsubtype1: İlk kullanılan silah alt tipi.
+- weapsubtype1_txt: İlk kullanılan silah alt tipinin açıklaması.
+- weaptype2: İkinci kullanılan silah tipi (varsa).
+- weaptype2_txt: İkinci kullanılan silah tipinin açıklaması (varsa).
+- weapsubtype2: İkinci kullanılan silah alt tipi (varsa).
+- weapsubtype2_txt: İkinci kullanılan silah alt tipinin açıklaması (varsa).
+- weaptype3: Üçüncü kullanılan silah tipi (varsa).
+- weaptype3_txt: Üçüncü kullanılan silah tipinin açıklaması (varsa).
+- weapsubtype3: Üçüncü kullanılan silah alt tipi (varsa).
+- weapsubtype3_txt: Üçüncü kullanılan silah alt tipinin açıklaması (varsa).
+- weaptype4: Dördüncü kullanılan silah tipi (varsa).
+- weaptype4_txt: Dördüncü kullanılan silah tipinin açıklaması (varsa).
+- weapsubtype4: Dördüncü kullanılan silah alt tipi (varsa).
+- weapsubtype4_txt: Dördüncü kullanılan silah alt tipinin açıklaması (varsa).
+- nkill: Olayda ölen kişilerin sayısı.
+- nkillus: Olayda ölen Amerikalı vatandaşların sayısı.
+- nkillter: Olayda ölen teröristlerin sayısı.
+- nwound: Olayda yaralanan kişilerin sayısı.
+- nwoundus: Olayda yaralanan Amerikalı vatandaşların sayısı.
+- nwoundte: Olayda yaralanan teröristlerin sayısı.
+- property: Mülk hasarı var mı (1: Evet, 0: Hayır).
+- propextent: Mülk hasarının boyutu.
+- propextent_txt: Mülk hasarının boyutunun açıklaması.
+- propvalue: Hasar gören mülkün değeri.
+- ishostkid: Olayda rehineler var mı (1: Evet, 0: Hayır).
+- nhostkid: Olaydaki rehine sayısı.
+- nhostkidus: Olaydaki Amerikalı rehine sayısı.
+- nhours: Olayın süresi saat cinsinden.
+- ndays: Olayın süresi gün cinsinden.
+- divert: Uçuşun veya taşıtın başka bir hedefe yönlendirilip yönlendirilmediği (1: Evet, 0: Hayır).
+- kidhijcountry: Rehin alma veya kaçırma durumunda rehine alındığı veya kaçırıldığı ülkenin adı.
+- ransom: Rehin alma durumunda fidye talep edildi mi (1: Evet, 0: Hayır).
+- ransomamt: Talep edilen fidye miktarı.
+- ransompaid: Ödenen fidye miktarı.
+- ransomamtus: Ödenen fidye miktarı (Amerikan doları olarak).
+- ransompaidus: Ödenen fidye miktarı (Amerikan doları olarak).
+- hostkidoutcome: Rehin alma durumunda rehine sonucu.
+- hostkidoutcome_txt: Rehin alma durumundaki rehine sonucunun açıklaması.
+- nreleased: Serbest bırakılan rehine sayısı.
+- addnotes: Olaya dair ek notlar.
+- scite1: Olaya dair birincil kaynak.
+- scite2: Olaya dair ikincil kaynak.
+- scite3: Olaya dair üçüncül kaynak.
+- dbsource: Veri kaynağı.
+- INT_LOG: Uluslararası terörizmle ilgili olarak verinin güvenilirliği (0-4 arası bir değer, 0 en güvenilir).
+- INT_IDEO: İdeolojik terörizmle ilgili olarak verinin güvenilirliği (0-4 arası bir değer, 0 en güvenilir).
+- INT_MISC: Terörizmle ilgili diğer faktörlerle ilgili olarak verinin güvenilirliği (0-4 arası bir değer, 0 en güvenilir).
+- INT_ANY: Herhangi bir terörizmle ilgili verinin güvenilirliği (0-4 arası bir değer, 0 en güvenilir).
+- related: Olayla ilgili diğer olaylar.
+
+
+## DATA:
+### https://www.kaggle.com/datasets/START-UMD/gtd

@@ -1,0 +1,11 @@
+EventID: 1
+
+Örgüt: 197000000002
+Yýl: 0
+Hedef: None
+Ölü Sayýsý: 0
+Yaralý Sayýsý: None
+Kordinat X: 1970
+Kordinat Y: 0
+
+
