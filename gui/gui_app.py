@@ -8,14 +8,16 @@ from PyQt5.QtCore import QUrl
 import psycopg2
 from postgres import postgres_info as psg_info
 
+csv_path = "data\\globalterrorismdb_0718dist.csv"
+
 class pandas_points():
     @staticmethod
     def get_location(latitude, longitude):
         return {'latitude': latitude, 'longitude': longitude}
 
 def map_creator():
-    csv_path = 'data\\globalterrorismdb_0718dist.csv'
-    data_terrors = pd.read_csv(csv_path, low_memory=False)
+    # csv_path = 'data\\globalterrorismdb_0718dist.csv'
+    data_terrors = pd.read_csv(csv_path, encoding='ISO-8859-1', low_memory=False)
     terrors = data_terrors[data_terrors["iyear"] <= 2013]
 
     latest_attacks = terrors.groupby('gname').agg({'iyear': 'max', 'imonth': 'max', 'iday': 'max', 'latitude': 'max', 'longitude': 'max', 'nkill': 'sum', 'nwound': 'sum', 'targtype1_txt': 'max', 'weaptype1': 'max','eventid':'max'})
@@ -38,9 +40,9 @@ def map_creator():
         eventid = row['eventid']
         summary = f"EventID: {eventid}<br><br>Örgüt: {gname}<br>Yıl: {year}<br>Hedef: {targtype1_txt}<br>Ölü Sayısı: {nkill}<br>Yaralı Sayısı: {nwound}"
 
-        terrorist_locations_3d = terrorist_locations_3d._append({'gname': gname, 'latitude': latitude, 'longitude': longitude, 'year': year, 'targtype1_txt': targtype1_txt, 'nkill': nkill, 'nwound': nwound, 'summary': summary, 'eventid': eventid}, ignore_index=True)
+        terrorist_locations_3d = terrorist_locations_3d._append({'gname': gname, 'latitude': latitude, 'longitude': longitude, 'year': year, 'targtype1_txt': targtype1_txt, 'nkill': nkill, 'nwound': nwound, 'summary': summary, 'eventid': eventid}, ignore_index=True) #type: ignore
 
-    m = folium.Map(location=[latitude, longitude], zoom_start=0)
+    m = folium.Map(location=[latitude, longitude], zoom_start=0) #type:ignore
 
     for _, location in terrorist_locations_3d.iterrows():
         latitude = location['latitude']
@@ -52,7 +54,7 @@ def map_creator():
         nwound = location['nwound']
         summary = location['summary']
         eventid = location['eventid']
-        if pd.notna(latitude) and pd.notna(longitude):  # Skip rows with NaN values
+        if pd.notna(latitude) and pd.notna(longitude):  # NaN değerleri için uygulanan bir işlem
             tooltip_text = f"{summary}"
             folium.CircleMarker(
                 location=[latitude, longitude],
@@ -92,7 +94,7 @@ class MainWindow(QMainWindow):
         button1.clicked.connect(self.button1_clicked)
         button_frame.addWidget(button1)
 
-        button2 = QPushButton("İncele", self)
+        button2 = QPushButton("Detaylı Veri", self)
         button2.clicked.connect(self.button2_clicked)
         button_frame.addWidget(button2)
 
@@ -117,7 +119,7 @@ class MainWindow(QMainWindow):
 
         data = {}
         for prompt, data_type in inputs:
-            value, ok = QInputDialog.getText(self, 'Popup', prompt)
+            value, ok = QInputDialog.getText(self, 'Veri Girişi', prompt)
             if not ok:
                 return
             try:
@@ -131,7 +133,7 @@ class MainWindow(QMainWindow):
         new_row = {'gname': data['Örgütü girin:'], 'latitude': data['Enlemi girin:'], 'longitude': data['Boylamı girin:'],
                 'year': data['Yılı girin:'], 'targtype1_txt': data['Hedefi girin:'], 'nkill': data['Ölü sayısını girin:'],
                 'nwound': data['Yaralı sayısını girin:'], 'eventid': eventid}
-        terrors = terrors._append(new_row, ignore_index=True)
+        terrors = terrors._append(new_row, ignore_index=True) # type: ignore
         terrors.to_csv('data\\copy.csv', index=False)
 
         
@@ -144,7 +146,7 @@ class MainWindow(QMainWindow):
         
         eventids = terrors['eventid'].astype(str).tolist()  # Event ID'leri dizeye dönüştürerek bir liste oluşturun
         
-        item, ok = QInputDialog.getItem(self, 'Popup', 'Event ID\'yi girin:', eventids, editable=False)
+        item, ok = QInputDialog.getItem(self, 'Detaylı Veri', 'Event ID\'yi girin:', eventids, editable=False)
         
         if ok:
             eventid = int(item)  # Seçilen öğeyi tam sayıya dönüştürün
@@ -183,7 +185,7 @@ class MainWindow(QMainWindow):
 
         eventids = terrors['eventid'].astype(str).tolist()  # Event ID'leri dizeye dönüştürerek bir liste oluşturun
 
-        selected_eventid, ok = QInputDialog.getItem(self, "Pop-up", "Event ID'yi seçin:", eventids, editable=False)
+        selected_eventid, ok = QInputDialog.getItem(self, "Veri Çekme", "Event ID'yi seçin:", eventids, editable=False)
         if not ok:
             return
 
@@ -192,7 +194,7 @@ class MainWindow(QMainWindow):
         # PostgreSQL veritabanına bağlantı
         conn = psycopg2.connect(host= psg_info.host_ip, user=psg_info.user_name,
                             password=psg_info.password,
-                            dbname=psg_info.database_name, port=psg_info.port)
+                            dbname=psg_info.database_name, port=psg_info.host_port)
 
         # Veritabanı sorgusu
         cursor = conn.cursor()
