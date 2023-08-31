@@ -8,16 +8,21 @@ from PyQt5.QtCore import QUrl
 import psycopg2
 from postgres import postgres_info as psg_info
 
-csv_path = "data\\globalterrorismdb_0718dist.csv"
-
 class pandas_points():
     @staticmethod
     def get_location(latitude, longitude):
         return {'latitude': latitude, 'longitude': longitude}
 
+
+##################################################################################################################################################
+csv_path = "D:\\flas\\GTD-terrors-tracking-app-main\\GTD-terrors-tracking-app-main\\data\\example_data.csv" # kendi pathinizi girerken örnek olması için bendeki konumunu yazdım. Eğer bu şekilde belirtmenize rağmen hata alıyorsanız USB bellek üzerinde çalıştırabilirsiniz.
+# csv_path = "D:\\flas\\GTD-terrors-tracking-app-main\\GTD-terrors-tracking-app-main\\data\\globalterrorismdb_0718dist.csv"
+data_terrors = pd.read_csv(csv_path, encoding='ISO-8859-1', low_memory=False)
+# map_creator() fonksiyonunun sonunda bulunan -->   map_file_path = '\\map.html' --> '\\' bundan öncesini kendi pathinize göre düzenleyin.
+# button1_clicked() fonksiyonunun sonunda bulunan -->   terrors = pd.read_csv('\\data\\example_data.csv') ve terrors.to_csv('\\data\\example_data.csv', index=False) 
+##################################################################################################################################################
+
 def map_creator():
-    # csv_path = 'data\\globalterrorismdb_0718dist.csv'
-    data_terrors = pd.read_csv(csv_path, encoding='ISO-8859-1', low_memory=False)
     terrors = data_terrors[data_terrors["iyear"] <= 2013]
 
     latest_attacks = terrors.groupby('gname').agg({'iyear': 'max', 'imonth': 'max', 'iday': 'max', 'latitude': 'max', 'longitude': 'max', 'nkill': 'sum', 'nwound': 'sum', 'targtype1_txt': 'max', 'weaptype1': 'max','eventid':'max'})
@@ -54,7 +59,7 @@ def map_creator():
         nwound = location['nwound']
         summary = location['summary']
         eventid = location['eventid']
-        if pd.notna(latitude) and pd.notna(longitude):  # NaN değerleri için uygulanan bir işlem
+        if pd.notna(latitude) and pd.notna(longitude):  # Skip rows with NaN values
             tooltip_text = f"{summary}"
             folium.CircleMarker(
                 location=[latitude, longitude],
@@ -128,20 +133,19 @@ class MainWindow(QMainWindow):
                 QMessageBox.warning(self, 'Pop-up', f'Hatalı veri girişi: {value}')
                 return
 
-        terrors = pd.read_csv('data\\copy.csv')
+        terrors = pd.read_csv('\\data\\example_data.csv')
         eventid = terrors['eventid'].max() + 1 if 'eventid' in terrors else 1
         new_row = {'gname': data['Örgütü girin:'], 'latitude': data['Enlemi girin:'], 'longitude': data['Boylamı girin:'],
                 'year': data['Yılı girin:'], 'targtype1_txt': data['Hedefi girin:'], 'nkill': data['Ölü sayısını girin:'],
                 'nwound': data['Yaralı sayısını girin:'], 'eventid': eventid}
         terrors = terrors._append(new_row, ignore_index=True) # type: ignore
-        terrors.to_csv('data\\copy.csv', index=False)
+        terrors.to_csv('\\data\\example_data.csv', index=False)
 
         
     def button2_clicked(self):
         # QMessageBox.information(self, "Pop-up", "Button 2'ye tıklandı!")
-        
-        csv_path = 'data\\globalterrorismdb_0718dist.csv'
-        data_terrors = pd.read_csv(csv_path, low_memory=False)
+        # csv_path = 'data\\globalterrorismdb_0718dist.csv'
+        data_terrors = pd.read_csv(csv_path, encoding='ISO-8859-1', low_memory=False)
         terrors = data_terrors[data_terrors['iyear'] <= 2013]
         
         eventids = terrors['eventid'].astype(str).tolist()  # Event ID'leri dizeye dönüştürerek bir liste oluşturun
@@ -179,7 +183,7 @@ class MainWindow(QMainWindow):
 
     def button3_clicked(self):
         # QMessageBox.information(self, "Pop-up", "Button 3'e tıklandı!")
-        csv_path = 'data\\globalterrorismdb_0718dist.csv'
+        # csv_path = 'data\\globalterrorismdb_0718dist.csv'
         data_terrors = pd.read_csv(csv_path, low_memory=False)
         terrors = data_terrors[data_terrors['iyear'] <= 2013]
 
@@ -207,8 +211,14 @@ class MainWindow(QMainWindow):
             with open(output_file, 'w') as file:
                 for row in rows:
                     eventid, gname, latitude, longitude, year, targtype1_txt, nkill, nwound, *_ = row
+                    
+                    # Ekleyebileceğiniz başlıklar:
                     #eventid,iyear,imonth,iday,approxdate,extended,resolution,country,country_txt,region,region_txt,provstate,city,latitude,longitude,specificity,vicinity,location,summary,crit1,crit2,crit3,doubtterr,alternative,alternative_txt,multiple,success,suicide,attacktype1,attacktype1_txt,attacktype2,attacktype2_txt,attacktype3,attacktype3_txt,targtype1,targtype1_txt,targsubtype1,targsubtype1_txt,corp1,target1,natlty1,natlty1_txt,targtype2,targtype2_txt,targsubtype2,targsubtype2_txt,corp2,target2,natlty2,natlty2_txt,targtype3,targtype3_txt,targsubtype3,targsubtype3_txt,corp3,target3,natlty3,natlty3_txt,gname,gsubname,gname2,gsubname2,gname3,gsubname3,motive,guncertain1,guncertain2,guncertain3,individual,nperps,nperpcap,claimed,claimmode,claimmode_txt,claim2,claimmode2,claimmode2_txt,claim3,claimmode3,claimmode3_txt,compclaim,weaptype1,weaptype1_txt,weapsubtype1,weapsubtype1_txt,weaptype2,weaptype2_txt,weapsubtype2,weapsubtype2_txt,weaptype3,weaptype3_txt,weapsubtype3,weapsubtype3_txt,weaptype4,weaptype4_txt,weapsubtype4,weapsubtype4_txt,weapdetail,nkill,nkillus,nkillter,nwound,nwoundus,nwoundte,property,propextent,propextent_txt,propvalue,propcomment,ishostkid,nhostkid,nhostkidus,nhours,ndays,divert,kidhijcountry,ransom,ransomamt,ransomamtus,ransompaid,ransompaidus,ransomnote,hostkidoutcome,hostkidoutcome_txt,nreleased,addnotes,scite1,scite2,scite3,dbsource,INT_LOG,INT_IDEO,INT_MISC,INT_ANY,related,year,month,day 
+                    
+                    # Şuan ekli olan başlıklar:
                     summary = f"EventID: {eventid}\n\nÖrgüt: {gname}\nYıl: {year}\nHedef: {targtype1_txt}\nÖlü Sayısı: {nkill}\nYaralı Sayısı: {nwound}\nKordinat X: {latitude}\nKordinat Y: {longitude}\n"
+                    
+                    
                     file.write(summary + "\n\n")
 
             QMessageBox.information(self, "Pop-up", f"Event ID {eventid} için özet dosyası oluşturuldu: {output_file}")
