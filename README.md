@@ -1,7 +1,9 @@
-# GTD-terrors-tracking-app
+# GTD-terrors-mapping
 
 - Bu proje tamamen eğitim amaçlıdır ve yaşanan terör olaylarıyla ilgili bir bağıntı bulunmamaktadır. Bu projede kullanılan veriler bir suç teşkil etmemesi adına 2013 yılına kadar sınırlandırılmıştır. Orjinal verilere internet üzerinden rahatlıkla erişilebilmektedir. Burada yazan kullanım yönlendirmelerini lütfen dikkatlice okuyunuz ve hepsini okuyup yapılması gerekenleri yaptıktan sonra programı hatasız bir şekilde başlatabilirsiniz.
 </br></br>
+
+![harita_yenile](./images/haritayiyenile.png)
 
 ### Programın Kullanımı
 ---
@@ -43,8 +45,8 @@
 ##### /notebooks klasöründe bulunanlar:
 - global_data.ipynb --> Burada ise çeşitli veri analizlerimiz ve grafiklerimiz bulunmaktadır. Bu grafiklerden ve analizlerden bazıları haritalandırma sistemi şeklinde gerçekleştirilmiştir. Dolayısıyla bu kodu bir jupyternotebook arayüzü ile veya bir ide ile açmanız önem arz etmektedir.
 </br></br>
-
-
+![analiz](./images/analiz.png)
+</br></br>
 
 ## Dikkat Edilmesi ve Yapılması Gerekenler :
 - data klasörü içerisinde bulunan dataset.md, kullanmakta olduğumuz GTD verisindeki sütunların isimlerini ve anlamlarını açıklamaktadır.
