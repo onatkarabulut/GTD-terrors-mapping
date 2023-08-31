@@ -1,3 +1,5 @@
+# kendi bilgierinize göre doldurunuz.
+
 database_name = ""
 user_name = ""
 password = ""
